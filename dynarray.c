@@ -19,25 +19,20 @@ array_info* get_array_info(void* array) {
     return (array_info*)array - 1;
 }
 
-int array_length(array_info* array) {
-    (array - 1)->length;
+size_t array_length(void* array) {
+    return get_array_info(array)->length;
 }
 
-void* push_back(void* array, int item) {
+void push_back(void* array, void* item) {
     array_info* arrayInfo = get_array_info(array);
-    if(arrayInfo->item_size != sizeof(item)) {
-	return array;
-    }
 
     if(arrayInfo->length == arrayInfo->capacity) {
 	size_t totalBytes = sizeof(array_info) + (arrayInfo->item_size * arrayInfo->capacity);
-	array_info* new_array = realloc(arrayInfo, totalBytes * 2);
-	arrayInfo = new_array;
+	array_info* arrayInfo = realloc(arrayInfo, totalBytes * 2);
+	array = arrayInfo + 1;
 	arrayInfo->capacity = arrayInfo->capacity * 2;
     }
 
-    int* another_new_array = (int*)(arrayInfo + 1);
-    another_new_array[arrayInfo->length] = item;
+    memcpy(array + (arrayInfo->length * arrayInfo->item_size), item, arrayInfo->item_size);
     arrayInfo->length++;
-    return arrayInfo + 1;
 }
