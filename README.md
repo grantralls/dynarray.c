@@ -1,4 +1,4 @@
-# Dynarray.C
+# dynarray.c
 *author: Grant S. Ralls*
 
 ## Motivation
