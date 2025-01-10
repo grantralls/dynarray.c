@@ -9,5 +9,6 @@ typedef struct {
 
 void* construct_array(size_t capacity, size_t item_size);
 array_info* get_array_info(void* array);
-void* push_back(void* array, int item);
-int array_length(array_info* array);
+void push_back(void* array, void* item);
+size_t array_length(void* array);
+
